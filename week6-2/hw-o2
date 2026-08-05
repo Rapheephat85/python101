@@ -1,0 +1,42 @@
+def longest_unique_word_sequence(words: list[list[str]]) -> tuple:
+    max_length = 0
+    results = []
+
+    def backtrack(index, current, used):
+        nonlocal max_length, results
+
+        # If we've considered all sublists
+        if index == len(words):
+            if len(current) > max_length:
+                max_length = len(current)
+                results = [current[:]]
+            elif len(current) == max_length:
+                results.append(current[:])
+            return
+
+        # Option 1: Skip this sublist
+        backtrack(index + 1, current, used)
+
+        # Option 2: Pick one unique word from this sublist
+        for word in words[index]:
+            if word not in used:
+                used.add(word)
+                current.append(word)
+
+                backtrack(index + 1, current, used)
+
+                current.pop()
+                used.remove(word)
+
+    backtrack(0, [], set())
+    return max_length, results
+
+
+# Test
+words = [["apple", "banana"], ["apple"], ["cherry", "banana"]]
+print(longest_unique_word_sequence(words))
+# (3, [['banana', 'apple', 'cherry'], ['apple', 'cherry', 'banana']])
+
+words2 = [["dog", "cat"], ["mouse", "cat"], ["bird", "dog"]]
+print(longest_unique_word_sequence(words2))
+# (3, [...])
