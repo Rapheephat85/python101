@@ -3,7 +3,7 @@ heroesdict = {}
 heroesdict['Hulk'] = '888-1111'
 heroesdict['Iron-man'] = '888-2222'
 print(heroesdict.get('Halk','key not found'))   
-print(heroesdict.get('Halk','key not found'))   
+print(heroesdict.get('Hulk','key not found'))   
 for key, value in phonebook.items():
     print(key,value)
 
